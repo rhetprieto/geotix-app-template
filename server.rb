@@ -156,7 +156,7 @@ class GeotixApp < Sinatra::Application
     def verify_webhook_signature
       their_signature_header = request.env['HTTP_X_GEOTIX_SIGNATURE'] || 'sha1='
       method, their_digest = their_signature_header.split('=')
-      our_digest = OpenSSL::HMAC.hexdigest(method, WEBHOOK_SECRET, "#{request.env['HTTP_X_GEOTIX_AUTH_TOKEN']}#{@payload_raw}")
+      our_digest = OpenSSL::HMAC.hexdigest(method, WEBHOOK_SECRET, "#{auth_token}#{@payload_raw}")
       halt [401, "Signatures don't match."] unless their_digest == our_digest
     end
 
@@ -165,7 +165,7 @@ class GeotixApp < Sinatra::Application
     # the users data scope, and with the privileges that you requested on the API
     # when you setup your application.
     def auth_token
-      request.env['HTTP_X_AUTH_TOKEN']
+      request.env['HTTP_X_GEOTIX_AUTH_TOKEN']
     end
   end
 end
