@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/rx/presenters.git
-  revision: 261d92565f4afb1b9cb2e8e1da6402a78c52b5bb
+  revision: b3846255deef3d99985e592ce66e37ddc79a38d4
+  branch: loads-last_response
   specs:
     voom-presenters (0.4.0)
       dry-configurable (> 0.1, <= 7.0)
