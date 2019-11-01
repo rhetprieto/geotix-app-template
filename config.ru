@@ -20,6 +20,7 @@ use Rack::Cors do
 end
 
 use Voom::Presenters::WebClient::App
+use Voom::Presenters::Api::App
 run GeotixApp
 
 Voom::Presenters::App.boot!

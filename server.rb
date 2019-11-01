@@ -3,7 +3,7 @@ require 'dotenv/load' # Manages environment variables
 require 'json'
 require 'openssl' # Verifies the webhook signature
 require 'logger' # Logs debug statements
-
+require 'pry' if ENV.fetch('RACK_ENV'){'development'} == 'development'
 # This is template code to create a Geotix App server.
 # You can read more about Geotix Apps here: # https://developer.geotix.io/apps/
 #
@@ -108,6 +108,18 @@ class GeotixApp < Sinatra::Application
     200
   end
 
+  # Called when a registered user interface extension point is triggered
+  # Returns Presenters Object Model (POM) json
+  post '/extend' do
+    content_type :json
+    # This is your configuration you setup and returned from register
+    # logger.debug { "Extend(#{point_code}) with payload(#{payload}) and config(#{config})" }
+    # The extension 'point' in the Geotix user interface
+    # These are locations that can be extended.
+    body render_presenter(point_code)
+    200
+  end
+
   helpers do
     # # # # # # # # # # # # # # # # #
     # ADD YOUR HELPER METHODS HERE  #
@@ -121,9 +133,11 @@ class GeotixApp < Sinatra::Application
       # The raw text of the body is required for webhook signature verification
       @payload_raw = request.body.read
       begin
+        logger.debug { params }
+        logger.debug{ @payload_raw.to_s.strip }
         @payload = JSON.parse @payload_raw unless @payload_raw.to_s.strip.empty?
       rescue => e
-        fail "Invalid JSON (#{e}): #{@payload_raw}"
+        logger.warn "Invalid JSON (#{e}): #{@payload_raw}"
       end
     end
 
@@ -135,6 +149,11 @@ class GeotixApp < Sinatra::Application
     # Returns the event code that you were notified for
     def event_code
       @payload.fetch('event')
+    end
+
+    # Returns the extension point code used by the /extend endpoint
+    def point_code
+      @payload.fetch('point')
     end
 
     # Returns the data associated with the event

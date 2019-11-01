@@ -1,0 +1,15 @@
+Voom::Presenters.define(:test_page) do
+  content id: :hello_world do
+    heading6 "Hello World! #{Time.now}"
+  end
+  button :click_me do
+    event :click do
+      snackbar 'hello world again!'
+      inserts :hello_world, presenters_url(:hello_world2)
+    end
+  end
+end
+
+Voom::Presenters.define(:hello_world2) do
+  heading1 "I said Hello World!! #{Time.now}"
+end

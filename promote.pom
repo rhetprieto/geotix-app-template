@@ -1,0 +1,8 @@
+Voom::Presenters.define(:promote_summary) do
+  heading6 "Syndicate your event to millions of user!"
+end
+
+Voom::Presenters.define(:promote_details) do
+  heading6 "Syndicate your event to millions of user!"
+  button 'Press here to get started!'
+end
