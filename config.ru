@@ -1,6 +1,6 @@
-require 'voom/presenters/api/app'
-require 'voom/presenters/web_client/app'
+require 'voom'
 require_relative "server"
+require 'pry'
 
 Voom::Presenters::Settings.configure do |config|
     config.presenters.root = __dir__
