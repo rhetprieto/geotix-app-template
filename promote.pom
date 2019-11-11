@@ -1,8 +1,22 @@
-Voom::Presenters.define(:promote_summary) do
-  heading6 "Syndicate your event to millions of user!"
+Voom::Presenters.define(:promote_card) do
+  card do
+    heading6 "Syndicate your event to zillions of user!"
+    content id: :place_cage
+    actions do
+      button 'Press here to get started!' do
+        event :click do
+          replace :place_cage, presenters_url(:place_cage, i: 0)
+        end
+      end
+    end
+  end
 end
 
-Voom::Presenters.define(:promote_details) do
-  heading6 "Syndicate your event to millions of user!"
-  button 'Press here to get started!'
+Voom::Presenters.define(:place_cage) do
+  DOMAINS = %i(placecage fillmurray stevensegallery)
+  content id: :place_cage do
+    index = Integer(context.fetch(:i))
+    hidden_field name: :i, value: index + 1
+    image "https://www.#{DOMAINS[index % 3]}.com/200/300", width: 200
+  end
 end
