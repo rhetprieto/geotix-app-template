@@ -113,7 +113,7 @@ class GeotixApp < Sinatra::Application
   post '/extend' do
     content_type :json
     # This is your configuration you setup and returned from register
-    # logger.debug { "Extend(#{point_code}) with payload(#{payload}) and config(#{config})" }
+    logger.debug { "Extend(#{point_code}) with payload(#{payload}) params(#{params}) and config(#{config})" }
     # The extension 'point' in the Geotix user interface
     # These are locations that can be extended.
     body render_presenter(point_code)
