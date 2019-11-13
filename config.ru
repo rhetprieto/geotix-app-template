@@ -1,6 +1,6 @@
 require 'voom'
 require_relative "server"
-require 'pry'
+require 'pry' if ENV.fetch('RACK_ENV', 'development') == 'development'
 
 Voom::Presenters::Settings.configure do |config|
     config.presenters.root = __dir__
