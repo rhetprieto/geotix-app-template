@@ -1,5 +1,7 @@
-PATH
-  remote: ../../rx/presenters
+GIT
+  remote: https://github.com/rx/presenters.git
+  revision: 0305083997e01ca3efcae8f4106d07e12c6cbf1d
+  branch: loads-last_response
   specs:
     voom-presenters (0.5.0)
       dry-configurable (> 0.1, <= 7.0)
